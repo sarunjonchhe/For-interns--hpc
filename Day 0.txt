@@ -1,0 +1,225 @@
+##This is for the purpose of tutorial materials for participants of interns and participants of the workshops
+
+### Download Putty using following Link (to connect to hpc clusters from windows:)
+
+https://the.earth.li/~sgtatham/putty/latest/w64/putty-64bit-0.74-installer.msi
+
+Enable X11 forwarding from Connection > Ssh > X11
+
+In Session > Host: hpc.ku.edu.np
+
+Logging Click on save for easy access in future.
+Host: hpc.ku.edu.np
+
+For convience during the workshop make the following settings accordingly:
+Windows> Appearance> cursor blink
+Font: Lucida Console, Regular, 13
+Connection> Login> yourusername
+
+
+- When you connect to hpc you may receive some security prompt click on Yes.
+- Please read policy of kuhpc before entering password.
+- If you receive connection error try using wired connection and retry connecting.
+- If you don't use Putty for long time you will be logged out automatically so you need to reconnect it.
+
+
+### Download Winscp
+
+We use winscp to browse files inside super computer. You can also transfer file to and from hpc.
+https://winscp.net/eng/index.php
+
+
+# Connecting HPC using Linux 
+
+Type this in terminal
+
+
+```
+ssh -X username@hpc.ku.edu.np
+```
+
+`-X` is flag used for x-forwarding which is used for showing gui programs like plot etc.
+
+
+You will be prompted with password. Password typing will not be shown.
+
+
+
+## Andriod Phone
+
+You can use terminus app and follow Linux Terminal guide.
+
+## OSX Phone
+
+You can use terminal app or iterm and follow Linux Terminal guide.
+
+
+## Changing password
+
+In terminal type following command
+
+
+```
+passwd
+```
+
+
+You will be asked to type old password, new password and retype new password. Enter password that are 8 digit long.
+
+
+
+### Mouting Lustre file system in home directory
+
+```
+ln -s /mnt/lustre/username scr0
+```
+Replace `username` with your `username`.
+
+
+This creates `scr0` in your home directory. Its just a symbolic link. You can think of it as shortcut for ``/mnt/lustre/username`
+
+
+### Making Directory in HPC
+
+To create a folder/directory you can use following command.
+
+```bash
+mkdir -p directory_name
+```
+
+`-p` flag will ensure if there is directory it doesn't error out.
+
+
+### Renaming file or folder in HPC
+
+```bash
+mv filename  final_filename
+```
+
+it changes `filename` to `final_filename`
+
+`mv`  command is also used to move file from one directory to another directory.
+
+
+
+## Loading Modules
+
+In HPC we import the modules. There are various module available like compiler toolchain, fortan compiles, gcc, clang, growmacs etc.
+
+
+To list all the available module.
+
+```bash
+module avail
+```
+
+To load module
+
+```bash
+module load module_name
+```
+
+Replace module_name with module that you need too run job.
+
+
+## Copying files from your pc to hpc (from terminal)
+Suppose if you want to copy the files in your pc to the scr0 folder in your hpc account
+
+```bash
+scp -r path_of_the_file_to_copy username@hpc.ku.edu.np:~/scr0/
+
+```
+
+`~` means home directory which is usually /home/username
+
+
+# Managing Jobs
+In HPC we do computation which is called jobs. Before submitting jobs please ensure you have loaded modules properly.
+
+
+### Submitting Jobs
+
+We use SLURM which stands for Simple Linux Utility Resource Manager. We use sbatch command to schedule job.
+
+```
+sbatch filename
+```
+
+### Checking Job Status
+
+All jobs are queued in HPC. To check the queue informations you can use following command.
+
+```bash
+squeue -l
+```
+
+## run.slurm file for Gamess calculation run
+
+```bash
+#!/bin/bash
+#SBATCH -J H20_Geom        #Job name
+#SBATCH -p normal          #Partition name
+#SBATCH -o job.%j.log      #Name of the stdout output file (%j expands to jobID)
+#SBATCH -N 1               #Total number of nodes requested
+#SBATCH -n 4               #Total number of mpi tasks requested
+#SBATCH -t 30:00           #RUN time (hh:mm:ss) - 1.5 hours
+
+#load needed modules
+module remove openmpi3/3.1.4
+
+module load mvapich2/2.3.2
+module load openblas/0.3.7
+module load gamess/2020R1
+
+#Launch executable
+rungms geometry.inp
+```
+
+## To download avogadro:
+Download it from the link `https://sourceforge.net/projects/avogadro/`
+
+If you are a linux (Debian based) user you can install it from the terminal:
+
+```bash
+sudo apt update
+sudo apt install avogadro
+```
+
+For other type of linux like arch linux please search for `avogadro` in your package repository
+
+
+### Copyig and Pasting in Terminal
+
+To copy
+
+Use shortcut key `ctrl  c`
+To Paste:
+
+In Linux you can use shortcut like `ctrl+shift+v`
+In Windows usually you can do by right click
+
+# Vi Guide
+For editing file you can use `nano` or `vi`. `Nano` is easier for  begineer.
+
+
+There are three mode in vim. Two mode are important for us
+
+1. Normal Mode
+2. Insertion Mode
+
+
+To go to Insertion Mode you can press `i` button
+To go to Normal Mode press `esc` button.
+
+
+In insertion mode you can type like normal edit. Edit it in insertion mode and to save type it like this
+
+
+`esc` `wq!`
+
+
+`esc` takes to normal mode
+
+`w` means write
+`q` means quit
+`!` some time writing can have issue to force we use exclamation mark. Usually exclamation mark is not needed.
