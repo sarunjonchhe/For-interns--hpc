@@ -1,5 +1,5 @@
 ##This is for the purpose of tutorial materials for participants of interns and participants of the workshops
-
+###Dr.Rajendra, Shirshak, Sarun
 ### Download Putty using following Link (to connect to hpc clusters from windows:)
 
 https://the.earth.li/~sgtatham/putty/latest/w64/putty-64bit-0.74-installer.msi
